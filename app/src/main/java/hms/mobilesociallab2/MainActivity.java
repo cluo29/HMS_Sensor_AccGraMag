@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -25,6 +26,28 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static Sensor mAccelerometer;
     private static Sensor mGravity;
     private static Sensor mMagnetometer;
+
+    private static float accelerometer_x = 0;
+    private static float accelerometer_y = 0;
+    private static float accelerometer_z = 0;
+
+    private static float gravity_x = 0;
+    private static float gravity_y = 0;
+    private static float gravity_z = 0;
+
+    private static float magnetometer_x = 0;
+    private static float magnetometer_y = 0;
+    private static float magnetometer_z = 0;
+
+    private static TextView Text_Accelerometer_x;
+    private static TextView Text_Accelerometer_y;
+    private static TextView Text_Accelerometer_z;
+    private static TextView Text_Gravity_x;
+    private static TextView Text_Gravity_y;
+    private static TextView Text_Gravity_z;
+    private static TextView Text_Magnetometer_x;
+    private static TextView Text_Magnetometer_y;
+    private static TextView Text_Magnetometer_z;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +68,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_NORMAL);
 
         setContentView(R.layout.activity_main);
+
+        Text_Accelerometer_x = (TextView)findViewById(R.id.Accelerometer_x);
+
+        Text_Accelerometer_y = (TextView)findViewById(R.id.Accelerometer_y);
+
+        Text_Accelerometer_z = (TextView)findViewById(R.id.Accelerometer_z);
+
+        Text_Gravity_x = (TextView)findViewById(R.id.Gravity_x);
+
+        Text_Gravity_y = (TextView)findViewById(R.id.Gravity_y);
+
+        Text_Gravity_z = (TextView)findViewById(R.id.Gravity_z);
+
+        Text_Magnetometer_x = (TextView)findViewById(R.id.Magnetometer_x);
+
+        Text_Magnetometer_y = (TextView)findViewById(R.id.Magnetometer_y);
+
+        Text_Magnetometer_z = (TextView)findViewById(R.id.Magnetometer_z);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -71,9 +113,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             // accelerometer data
-            float accelerometer_x = event.values[0];
-            float accelerometer_y = event.values[1];
-            float accelerometer_z = event.values[2];
+            accelerometer_x = event.values[0];
+            accelerometer_y = event.values[1];
+            accelerometer_z = event.values[2];
 
             Log.d("SENSORS", "accelerometer_x= " + accelerometer_x);
             Log.d("SENSORS", "accelerometer_y= " + accelerometer_y);
@@ -82,9 +124,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (sensor.getType() == Sensor.TYPE_GRAVITY) {
             // gravity data
-            float gravity_x = event.values[0];
-            float gravity_y = event.values[1];
-            float gravity_z = event.values[2];
+            gravity_x = event.values[0];
+            gravity_y = event.values[1];
+            gravity_z = event.values[2];
 
             Log.d("SENSORS", "gravity_x= " + gravity_x);
             Log.d("SENSORS", "gravity_y= " + gravity_y);
@@ -93,14 +135,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
             // magnetometer data
-            float magnetometer_x = event.values[0];
-            float magnetometer_y = event.values[1];
-            float magnetometer_z = event.values[2];
+            magnetometer_x = event.values[0];
+            magnetometer_y = event.values[1];
+            magnetometer_z = event.values[2];
 
             Log.d("SENSORS", "magnetometer_x= " + magnetometer_x);
             Log.d("SENSORS", "magnetometer_y= " + magnetometer_y);
             Log.d("SENSORS", "magnetometer_z= " + magnetometer_z);
         }
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Text_Accelerometer_x.setText("Accelerometer X = "+accelerometer_x);
+                Text_Accelerometer_y.setText("Accelerometer Y = "+accelerometer_y);
+                Text_Accelerometer_z.setText("Accelerometer Z = "+accelerometer_z);
+                Text_Gravity_x.setText("Gravity X = "+gravity_x);
+                Text_Gravity_y.setText("Gravity Y = "+gravity_y);
+                Text_Gravity_z.setText("Gravity Z = "+gravity_z);
+                Text_Magnetometer_x.setText("Magnetometer X = "+magnetometer_x);
+                Text_Magnetometer_y.setText("Magnetometer Y = "+magnetometer_y);
+                Text_Magnetometer_z.setText("Magnetometer Z = "+magnetometer_z);
+            }
+        });
     }
 
 
